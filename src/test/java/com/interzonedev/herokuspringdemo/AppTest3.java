@@ -7,17 +7,25 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.interzonedev.herokuspringdemo.service.user.UserService;
-import com.interzonedev.integrationtest.AbstractIntegrationTest;
+import com.interzonedev.integrationtest.dataset.DataSet;
 
-public class AppTest extends AbstractIntegrationTest {
+public class AppTest3 extends HerokuAbstractIntegrationTest {
 	private Log log = LogFactory.getLog(getClass());
 
 	@Autowired
 	UserService userService;
 
 	@Test
-	public void testApp() {
-		log.debug("testApp");
+	@DataSet(filename = "")
+	public void testApp3_1() {
+		log.debug("testApp3_1");
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testApp3_2() {
+		log.debug("testApp3_2");
 
 		Assert.assertTrue(true);
 	}

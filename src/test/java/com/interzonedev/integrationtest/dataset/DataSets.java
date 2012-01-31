@@ -6,15 +6,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.interzonedev.integrationtest.dataset.handler.Handler;
-
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Inherited
-public @interface DataSet {
-	String filename();
-
-	String handlerBeanId() default "";
-
-	Handler handler() default Handler.DBUNIT;
+public @interface DataSets {
+	DataSet[] dataSets();
 }
