@@ -1,8 +1,6 @@
 package com.interzonedev.integrationtest.dataset.helper;
 
 import java.io.File;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -10,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 
-public abstract class AbstractDataSetHelper implements DataSetHelper {
+public class DataSetHelperImpl implements DataSetHelper {
 	private Log log = LogFactory.getLog(getClass());
 
 	private final String dataSetDirectory;
@@ -18,7 +16,7 @@ public abstract class AbstractDataSetHelper implements DataSetHelper {
 	@Autowired
 	private ApplicationContext applicationContext;
 
-	public AbstractDataSetHelper(String dataSetDirectory) {
+	public DataSetHelperImpl(String dataSetDirectory) {
 		this.dataSetDirectory = dataSetDirectory;
 	}
 
@@ -41,22 +39,4 @@ public abstract class AbstractDataSetHelper implements DataSetHelper {
 			throw new RuntimeException(errorMessage, e);
 		}
 	}
-
-	public List<Map<String, Object>> getDataSetValues(String dataSetFilename, boolean validate) {
-		File dataSetFile = getDataSetFile(dataSetFilename);
-
-		List<Map<String, Object>> dataSetValues = getDataSetValues(dataSetFile);
-
-		if (validate) {
-			validateDataSetValues(dataSetValues);
-		}
-
-		return dataSetValues;
-	}
-
-	@Override
-	public abstract List<Map<String, Object>> getDataSetValues(File dataSetFile);
-
-	@Override
-	public abstract void validateDataSetValues(List<Map<String, Object>> dataSetValues);
 }

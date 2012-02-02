@@ -1,5 +1,15 @@
 package com.interzonedev.integrationtest.dataset.handler;
 
 public enum Handler {
-	DBUNIT;
+	DBUNIT("dbUnitDataSetHandler");
+
+	private final String handlerBeanId;
+
+	private Handler(String handlerBeanId) {
+		this.handlerBeanId = handlerBeanId;
+	}
+
+	public String handlerBeanId() {
+		return handlerBeanId;
+	}
 }
