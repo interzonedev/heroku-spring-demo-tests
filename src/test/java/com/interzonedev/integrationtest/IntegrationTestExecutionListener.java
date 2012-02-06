@@ -2,8 +2,6 @@ package com.interzonedev.integrationtest;
 
 import java.io.File;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -22,16 +20,18 @@ import com.interzonedev.integrationtest.dataset.helper.DataSetHelper;
 public class IntegrationTestExecutionListener extends AbstractTestExecutionListener {
 	private Log log = LogFactory.getLog(getClass());
 
-	private DataSets classDataSets;
-
-	private DataSet classDataSet;
+	private final ThreadLocal<IntegrationTestContext> integrationTestContext = new ThreadLocal<IntegrationTestContext>();
 
 	private ApplicationContext applicationContext;
 
 	private DataSetHelper dataSetHelper;
 
-	private enum DatabaseOp {
+	private enum Operation {
 		SETUP, TEARDOWN;
+	}
+
+	public IntegrationTestExecutionListener() {
+		integrationTestContext.set(new IntegrationTestContext());
 	}
 
 	@Override
@@ -41,9 +41,11 @@ public class IntegrationTestExecutionListener extends AbstractTestExecutionListe
 		Class<?> testClass = testContext.getTestClass();
 
 		if (testClass.isAnnotationPresent(DataSets.class)) {
-			classDataSets = (DataSets) testClass.getAnnotation(DataSets.class);
+			DataSets classDataSets = (DataSets) testClass.getAnnotation(DataSets.class);
+			integrationTestContext.get().addClassDataSets(classDataSets);
 		} else if (testClass.isAnnotationPresent(DataSet.class)) {
-			classDataSet = (DataSet) testClass.getAnnotation(DataSet.class);
+			DataSet classDataSet = (DataSet) testClass.getAnnotation(DataSet.class);
+			integrationTestContext.get().addClassDataSet(classDataSet);
 		}
 
 		applicationContext = testContext.getApplicationContext();
@@ -52,47 +54,51 @@ public class IntegrationTestExecutionListener extends AbstractTestExecutionListe
 	}
 
 	@Override
+	public void afterTestClass(TestContext testContext) throws Exception {
+		integrationTestContext.remove();
+	}
+
+	@Override
 	public void beforeTestMethod(TestContext testContext) throws Exception {
 		log.debug("beforeTestMethod");
 
-		doDatabaseOpertions(DatabaseOp.SETUP, testContext);
+		doDatabaseOpertions(Operation.SETUP, testContext);
 	}
 
 	@Override
 	public void afterTestMethod(TestContext testContext) throws Exception {
 		log.debug("afterTestMethod");
 
-		doDatabaseOpertions(DatabaseOp.TEARDOWN, testContext);
+		doDatabaseOpertions(Operation.TEARDOWN, testContext);
 	}
 
 	private List<DataSet> getTestDataSets(TestContext testContext) {
-		List<DataSet> testDataSets = new ArrayList<DataSet>();
-
 		Method method = testContext.getTestMethod();
 
-		if (method.isAnnotationPresent(DataSets.class)) {
-			DataSets methodDataSets = (DataSets) method.getAnnotation(DataSets.class);
-			testDataSets.addAll(Arrays.asList(methodDataSets.dataSets()));
-		} else if (method.isAnnotationPresent(DataSet.class)) {
-			DataSet methodDataSet = (DataSet) method.getAnnotation(DataSet.class);
-			testDataSets.add(methodDataSet);
-		}
+		List<DataSet> testDataSets = integrationTestContext.get().getMethodDataSets(method);
 
 		if (testDataSets.isEmpty()) {
-			if (null != classDataSets) {
-				testDataSets.addAll(Arrays.asList(classDataSets.dataSets()));
-			} else if (null != classDataSet) {
-				testDataSets.add(classDataSet);
+			if (method.isAnnotationPresent(DataSets.class)) {
+				DataSets methodDataSets = (DataSets) method.getAnnotation(DataSets.class);
+				integrationTestContext.get().addMethodDataSets(method, methodDataSets);
+			} else if (method.isAnnotationPresent(DataSet.class)) {
+				DataSet methodDataSet = (DataSet) method.getAnnotation(DataSet.class);
+				integrationTestContext.get().addMethodDataSet(method, methodDataSet);
 			}
+		}
+
+		// TODO - Figure out how to skip this on the after method for a test with no method data sets.
+		if (testDataSets.isEmpty()) {
+			testDataSets = integrationTestContext.get().getClassDataSets();
 		}
 
 		return testDataSets;
 	}
 
-	private void doDatabaseOpertions(DatabaseOp databaseOp, TestContext testContext) {
+	private void doDatabaseOpertions(Operation operation, TestContext testContext) {
 		List<DataSet> testDataSets = getTestDataSets(testContext);
 
-		if (testDataSets.isEmpty()) {
+		if (Operation.SETUP.equals(operation) && testDataSets.isEmpty()) {
 			StringBuilder errorMessage = new StringBuilder("doDatabaseOpertions: ");
 			errorMessage.append("The test method ").append(testContext.getTestMethod().getName());
 			errorMessage.append(" on the test class ").append(testContext.getTestClass().getName());
@@ -127,7 +133,7 @@ public class IntegrationTestExecutionListener extends AbstractTestExecutionListe
 
 			Object dataSourceBean = applicationContext.getBean(dataSourceBeanId);
 
-			switch (databaseOp) {
+			switch (operation) {
 				case SETUP:
 					dataSetHandler.cleanAndInsertData(dataSetFile, dataSourceBean);
 					break;
