@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.interzonedev.herokuspringdemo.service.user.UserService;
 import com.interzonedev.integrationtest.dataset.DataSet;
 
-@DataSet(filename = "")
+@DataSet(filename = "users/usersDataSet.xml", dataSourceBeanId = "dataSource")
 public class AppTest2 extends HerokuAbstractIntegrationTest {
 	private Log log = LogFactory.getLog(getClass());
 

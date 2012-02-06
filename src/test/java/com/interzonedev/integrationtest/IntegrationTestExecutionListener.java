@@ -1,5 +1,6 @@
 package com.interzonedev.integrationtest;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +17,7 @@ import com.interzonedev.integrationtest.dataset.DataSet;
 import com.interzonedev.integrationtest.dataset.DataSets;
 import com.interzonedev.integrationtest.dataset.handler.DataSetHandler;
 import com.interzonedev.integrationtest.dataset.handler.Handler;
+import com.interzonedev.integrationtest.dataset.helper.DataSetHelper;
 
 public class IntegrationTestExecutionListener extends AbstractTestExecutionListener {
 	private Log log = LogFactory.getLog(getClass());
@@ -25,6 +27,12 @@ public class IntegrationTestExecutionListener extends AbstractTestExecutionListe
 	private DataSet classDataSet;
 
 	private ApplicationContext applicationContext;
+
+	private DataSetHelper dataSetHelper;
+
+	private enum DatabaseOp {
+		SETUP, TEARDOWN;
+	}
 
 	@Override
 	public void beforeTestClass(TestContext testContext) throws Exception {
@@ -39,16 +47,53 @@ public class IntegrationTestExecutionListener extends AbstractTestExecutionListe
 		}
 
 		applicationContext = testContext.getApplicationContext();
+
+		dataSetHelper = (DataSetHelper) applicationContext.getBean("dataSetHelper");
 	}
 
 	@Override
 	public void beforeTestMethod(TestContext testContext) throws Exception {
 		log.debug("beforeTestMethod");
 
+		doDatabaseOpertions(DatabaseOp.SETUP, testContext);
+	}
+
+	@Override
+	public void afterTestMethod(TestContext testContext) throws Exception {
+		log.debug("afterTestMethod");
+
+		doDatabaseOpertions(DatabaseOp.TEARDOWN, testContext);
+	}
+
+	private List<DataSet> getTestDataSets(TestContext testContext) {
+		List<DataSet> testDataSets = new ArrayList<DataSet>();
+
+		Method method = testContext.getTestMethod();
+
+		if (method.isAnnotationPresent(DataSets.class)) {
+			DataSets methodDataSets = (DataSets) method.getAnnotation(DataSets.class);
+			testDataSets.addAll(Arrays.asList(methodDataSets.dataSets()));
+		} else if (method.isAnnotationPresent(DataSet.class)) {
+			DataSet methodDataSet = (DataSet) method.getAnnotation(DataSet.class);
+			testDataSets.add(methodDataSet);
+		}
+
+		if (testDataSets.isEmpty()) {
+			if (null != classDataSets) {
+				testDataSets.addAll(Arrays.asList(classDataSets.dataSets()));
+			} else if (null != classDataSet) {
+				testDataSets.add(classDataSet);
+			}
+		}
+
+		return testDataSets;
+	}
+
+	private void doDatabaseOpertions(DatabaseOp databaseOp, TestContext testContext) {
 		List<DataSet> testDataSets = getTestDataSets(testContext);
 
 		if (testDataSets.isEmpty()) {
-			StringBuilder errorMessage = new StringBuilder("getTestDataSets: ");
+			StringBuilder errorMessage = new StringBuilder("doDatabaseOpertions: ");
 			errorMessage.append("The test method ").append(testContext.getTestMethod().getName());
 			errorMessage.append(" on the test class ").append(testContext.getTestClass().getName());
 			errorMessage.append(" does not have a DataSets or DataSet annotation");
@@ -65,7 +110,7 @@ public class IntegrationTestExecutionListener extends AbstractTestExecutionListe
 			}
 
 			if (StringUtils.isBlank(handlerBeanId)) {
-				StringBuilder errorMessage = new StringBuilder("getTestDataSets: ");
+				StringBuilder errorMessage = new StringBuilder("doDatabaseOpertions: ");
 				errorMessage.append("The test method ").append(testContext.getTestMethod().getName());
 				errorMessage.append(" on the test class ").append(testContext.getTestClass().getName());
 				errorMessage.append(" does not specify a handler bean id.");
@@ -74,34 +119,22 @@ public class IntegrationTestExecutionListener extends AbstractTestExecutionListe
 
 			DataSetHandler dataSetHandler = (DataSetHandler) applicationContext.getBean(handlerBeanId);
 
-			String filename = dataSet.filename();
-		}
-	}
+			String dataSetFilename = dataSet.filename();
 
-	@Override
-	public void afterTestMethod(TestContext testContext) throws Exception {
-		log.debug("afterTestMethod");
-	}
+			File dataSetFile = dataSetHelper.getDataSetFile(dataSetFilename);
 
-	private List<DataSet> getTestDataSets(TestContext testContext) {
-		List<DataSet> testDataSets = new ArrayList<DataSet>();
+			String dataSourceBeanId = dataSet.dataSourceBeanId();
 
-		if (null != classDataSets) {
-			testDataSets.addAll(Arrays.asList(classDataSets.dataSets()));
-		} else if (null != classDataSet) {
-			testDataSets.add(classDataSet);
-		} else {
-			Method method = testContext.getTestMethod();
+			Object dataSourceBean = applicationContext.getBean(dataSourceBeanId);
 
-			if (method.isAnnotationPresent(DataSets.class)) {
-				DataSets methodDataSets = (DataSets) method.getAnnotation(DataSets.class);
-				testDataSets.addAll(Arrays.asList(methodDataSets.dataSets()));
-			} else if (method.isAnnotationPresent(DataSet.class)) {
-				DataSet methodDataSet = (DataSet) method.getAnnotation(DataSet.class);
-				testDataSets.add(methodDataSet);
+			switch (databaseOp) {
+				case SETUP:
+					dataSetHandler.cleanAndInsertData(dataSetFile, dataSourceBean);
+					break;
+				case TEARDOWN:
+					dataSetHandler.cleanData(dataSetFile, dataSourceBean);
+					break;
 			}
 		}
-
-		return testDataSets;
 	}
 }

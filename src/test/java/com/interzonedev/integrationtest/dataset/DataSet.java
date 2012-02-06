@@ -17,4 +17,6 @@ public @interface DataSet {
 	String handlerBeanId() default "";
 
 	Handler handler() default Handler.DBUNIT;
+
+	String dataSourceBeanId();
 }

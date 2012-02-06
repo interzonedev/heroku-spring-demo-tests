@@ -16,7 +16,7 @@ public class AppTest3 extends HerokuAbstractIntegrationTest {
 	UserService userService;
 
 	@Test
-	@DataSet(filename = "")
+	@DataSet(filename = "users/usersDataSet.xml", dataSourceBeanId = "dataSource")
 	public void testApp3_1() {
 		log.debug("testApp3_1");
 
