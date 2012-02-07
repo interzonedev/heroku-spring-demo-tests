@@ -61,9 +61,6 @@ public class DbUnitDataSetHandler implements DataSetHandler {
 
 		IDatabaseConnection databaseConnection = new DatabaseConnection(connection);
 
-		// DatabaseConfig databaseConfig = databaseConnection.getConfig();
-		// databaseConfig.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new MySqlDataTypeFactory());
-
 		return databaseConnection;
 	}
 

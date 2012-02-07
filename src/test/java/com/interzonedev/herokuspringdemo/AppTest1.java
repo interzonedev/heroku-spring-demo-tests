@@ -10,7 +10,7 @@ import com.interzonedev.herokuspringdemo.service.user.UserService;
 import com.interzonedev.integrationtest.dataset.DataSet;
 import com.interzonedev.integrationtest.dataset.DataSets;
 
-@DataSets(dataSets = { @DataSet(filename = "users/usersDataSet.xml", dataSourceBeanId = "dataSource") })
+@DataSets(dataSets = { @DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource") })
 public class AppTest1 extends HerokuAbstractIntegrationTest {
 	private Log log = LogFactory.getLog(getClass());
 
@@ -18,7 +18,7 @@ public class AppTest1 extends HerokuAbstractIntegrationTest {
 	UserService userService;
 
 	@Test
-	@DataSets(dataSets = { @DataSet(filename = "users/usersDataSet.xml", dataSourceBeanId = "dataSource") })
+	@DataSets(dataSets = { @DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource") })
 	public void testApp1_1() {
 		log.debug("testApp1_1");
 
@@ -26,7 +26,7 @@ public class AppTest1 extends HerokuAbstractIntegrationTest {
 	}
 
 	@Test
-	@DataSet(filename = "users/usersDataSet.xml", dataSourceBeanId = "dataSource")
+	@DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
 	public void testApp1_2() {
 		log.debug("testApp1_2");
 

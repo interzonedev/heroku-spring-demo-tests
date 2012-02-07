@@ -11,30 +11,17 @@ import org.springframework.core.io.Resource;
 public class DataSetHelperImpl implements DataSetHelper {
 	private Log log = LogFactory.getLog(getClass());
 
-	private final String dataSetDirectory;
-
 	@Autowired
 	private ApplicationContext applicationContext;
-
-	public DataSetHelperImpl(String dataSetDirectory) {
-		this.dataSetDirectory = dataSetDirectory;
-	}
 
 	@Override
 	public final File getDataSetFile(String dataSetFilename) {
 		try {
-			StringBuilder dataSetPath = new StringBuilder(dataSetDirectory);
-			if (!dataSetDirectory.endsWith("/")) {
-				dataSetPath.append("/");
-			}
-			dataSetPath.append(dataSetFilename);
-
-			Resource dataSetResource = applicationContext.getResource("classpath:" + dataSetPath.toString());
+			Resource dataSetResource = applicationContext.getResource("classpath:" + dataSetFilename);
 			File dataSetFile = dataSetResource.getFile();
-
 			return dataSetFile;
 		} catch (Exception e) {
-			String errorMessage = "getDataSetFile: Error getting dataset file";
+			String errorMessage = "getDataSetFile: Error getting dataset file from " + dataSetFilename;
 			log.error(errorMessage, e);
 			throw new RuntimeException(errorMessage, e);
 		}

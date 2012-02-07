@@ -87,7 +87,6 @@ public class IntegrationTestExecutionListener extends AbstractTestExecutionListe
 			}
 		}
 
-		// TODO - Figure out how to skip this on the after method for a test with no method data sets.
 		if (testDataSets.isEmpty()) {
 			testDataSets = integrationTestContext.get().getClassDataSets();
 		}
