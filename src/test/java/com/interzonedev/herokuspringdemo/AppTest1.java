@@ -15,12 +15,14 @@ public class AppTest1 extends HerokuAbstractIntegrationTest {
 	private Log log = LogFactory.getLog(getClass());
 
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
 	@Test
 	@DataSets(dataSets = { @DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource") })
 	public void testApp1_1() {
 		log.debug("testApp1_1");
+
+		log.debug("userService = " + userService);
 
 		Assert.assertTrue(true);
 	}
