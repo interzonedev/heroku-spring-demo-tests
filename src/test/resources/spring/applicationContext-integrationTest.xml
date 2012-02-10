@@ -7,4 +7,6 @@
 	<bean id="dataSetHelper" class="com.interzonedev.integrationtest.dataset.helper.DataSetHelperImpl" />
 
 	<bean id="dbUnitDataSetHandler" class="com.interzonedev.integrationtest.dataset.dbunit.DbUnitDataSetHandler" />
+
+	<bean id="dbUnitDataSetTester" class="com.interzonedev.integrationtest.dataset.dbunit.DbUnitDataSetTester" />
 </beans>
