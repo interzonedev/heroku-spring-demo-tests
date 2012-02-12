@@ -1,35 +1,17 @@
 package com.interzonedev.herokuspringdemo.service.user;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.sql.DataSource;
+import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.interzonedev.herokuspringdemo.HerokuAbstractIntegrationTest;
 import com.interzonedev.sprintfix.dataset.DataSet;
-import com.interzonedev.sprintfix.dataset.dbunit.DbUnitDataSetTester;
 
-@DataSet(filename = "dataset/users/emptyUsersDataSet.xml", dataSourceBeanId = "dataSource")
-public class UserServiceIntegrationTest extends HerokuAbstractIntegrationTest {
+public class UserServiceCreateUserIntegrationTest extends AbstractUserServiceIntegrationTest {
+
 	private Log log = LogFactory.getLog(getClass());
-
-	private static List<String> USERS_IGNORE_COLUMN_NAMES = Arrays.asList(new String[] { "id", "time_created",
-			"time_updated" });
-
-	@Autowired
-	private UserService userService;
-
-	@Autowired
-	private DataSource dataSource;
-
-	@Autowired
-	private DbUnitDataSetTester dbUnitDataSetTester;
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testCreateUserNullFirstName() {
@@ -81,9 +63,14 @@ public class UserServiceIntegrationTest extends HerokuAbstractIntegrationTest {
 		String firstName = "Gern";
 		String lastName = "Blanston";
 
+		Date now = new Date();
+
 		User user = userService.createUser(firstName, lastName, true);
 
 		Assert.assertNotNull(user);
+		Assert.assertTrue(user.getId() > 0);
+		Assert.assertEquals(1, user.getTimeCreated().compareTo(now));
+		Assert.assertEquals(1, user.getTimeUpdated().compareTo(now));
 		Assert.assertEquals(firstName, user.getFirstName());
 		Assert.assertEquals(lastName, user.getLastName());
 		Assert.assertTrue(user.isAdmin());
@@ -92,16 +79,4 @@ public class UserServiceIntegrationTest extends HerokuAbstractIntegrationTest {
 				USERS_IGNORE_COLUMN_NAMES);
 	}
 
-	@Test
-	@DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
-	public void testDeleteUser() {
-		log.debug("testDeleteUser");
-
-		User user = userService.getById(1L);
-
-		userService.deleteUser(user);
-
-		dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/emptyUsersDataSet.xml", "users",
-				USERS_IGNORE_COLUMN_NAMES);
-	}
 }
