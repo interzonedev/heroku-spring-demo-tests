@@ -25,10 +25,6 @@
 		<level value="info" />
 	</logger>
 
-	<logger name="org.springframework.web">
-		<level value="info" />
-	</logger>
-
 	<logger name="org.springframework.test">
 		<level value="info" />
 	</logger>

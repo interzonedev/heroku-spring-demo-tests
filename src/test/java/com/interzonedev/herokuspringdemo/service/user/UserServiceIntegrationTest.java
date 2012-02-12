@@ -12,10 +12,10 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.interzonedev.herokuspringdemo.HerokuAbstractIntegrationTest;
-import com.interzonedev.integrationtest.dataset.DataSet;
-import com.interzonedev.integrationtest.dataset.DataSets;
-import com.interzonedev.integrationtest.dataset.dbunit.DbUnitDataSetTester;
+import com.interzonedev.sprintfix.dataset.DataSet;
+import com.interzonedev.sprintfix.dataset.dbunit.DbUnitDataSetTester;
 
+@DataSet(filename = "dataset/users/emptyUsersDataSet.xml", dataSourceBeanId = "dataSource")
 public class UserServiceIntegrationTest extends HerokuAbstractIntegrationTest {
 	private Log log = LogFactory.getLog(getClass());
 
@@ -31,10 +31,52 @@ public class UserServiceIntegrationTest extends HerokuAbstractIntegrationTest {
 	@Autowired
 	private DbUnitDataSetTester dbUnitDataSetTester;
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testCreateUserNullFirstName() {
+		log.debug("testCreateUserNullFirstName");
+
+		userService.createUser(null, "test", true);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testCreateUserEmptyFirstName() {
+		log.debug("testCreateUserEmptyFirstName");
+
+		userService.createUser("", "test", true);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testCreateUserBlankFirstName() {
+		log.debug("testCreateUserBlankFirstName");
+
+		userService.createUser("  ", "test", true);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testCreateUserNullLastName() {
+		log.debug("testCreateUserNullLastName");
+
+		userService.createUser("test", null, true);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testCreateUserEmptyLastName() {
+		log.debug("testCreateUserEmptyLastName");
+
+		userService.createUser("test", "", true);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testCreateUserBlankLastName() {
+		log.debug("testCreateUserBlankLastName");
+
+		userService.createUser("test", "  ", true);
+	}
+
 	@Test
-	@DataSets(dataSets = { @DataSet(filename = "dataset/users/emptyUsersDataSet.xml", dataSourceBeanId = "dataSource") })
-	public void testCreateUser() {
-		log.debug("testCreateUser");
+	@DataSet(filename = "dataset/users/emptyUsersDataSet.xml", dataSourceBeanId = "dataSource")
+	public void testCreateUserValid() {
+		log.debug("testCreateUserValid");
 
 		String firstName = "Gern";
 		String lastName = "Blanston";
@@ -51,7 +93,7 @@ public class UserServiceIntegrationTest extends HerokuAbstractIntegrationTest {
 	}
 
 	@Test
-	@DataSets(dataSets = { @DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource") })
+	@DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
 	public void testDeleteUser() {
 		log.debug("testDeleteUser");
 
