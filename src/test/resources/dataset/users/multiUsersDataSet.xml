@@ -3,4 +3,6 @@
 <dataset>
 	<users id="1" first_name="Gern" last_name="Blanston" admin="true" time_created="1970-01-01 00:00:00.0"
 		time_updated="1970-01-01 00:00:00.0" />
+	<users id="2" first_name="Uncle" last_name="Fester" admin="false" time_created="1970-01-01 00:00:00.0"
+		time_updated="1970-01-01 00:00:00.0" />
 </dataset>

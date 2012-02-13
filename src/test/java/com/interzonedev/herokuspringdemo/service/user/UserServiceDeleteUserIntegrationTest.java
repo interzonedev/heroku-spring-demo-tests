@@ -1,14 +1,12 @@
 package com.interzonedev.herokuspringdemo.service.user;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import com.interzonedev.sprintfix.dataset.DataSet;
 
 public class UserServiceDeleteUserIntegrationTest extends AbstractUserServiceIntegrationTest {
-
-	private Log log = LogFactory.getLog(getClass());
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testDeleteUserNullUser() {
@@ -38,13 +36,21 @@ public class UserServiceDeleteUserIntegrationTest extends AbstractUserServiceInt
 
 	@Test
 	@DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
-	public void testDeleteUserUserWithNonExistingId() {
-		log.debug("testDeleteUserUserWithNonExistingId");
+	public void testDeleteUserUserWithNonExistentId() {
+		log.debug("testDeleteUserUserWithNonExistentId");
 
 		User user = new User();
-		user.setId(2L);
+		user.setId(100L);
 
-		userService.deleteUser(user);
+		boolean emptyResultDataAccessExceptionThrown = false;
+
+		try {
+			userService.deleteUser(user);
+		} catch (EmptyResultDataAccessException e) {
+			emptyResultDataAccessExceptionThrown = true;
+		}
+
+		Assert.assertTrue(emptyResultDataAccessExceptionThrown);
 
 		dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/usersDataSet.xml", "users",
 				USERS_IGNORE_COLUMN_NAMES);
@@ -55,7 +61,7 @@ public class UserServiceDeleteUserIntegrationTest extends AbstractUserServiceInt
 	public void testDeleteUserValid() {
 		log.debug("testDeleteUserValid");
 
-		User user = userService.getById(1L);
+		User user = userService.getUserById(1L);
 
 		userService.deleteUser(user);
 

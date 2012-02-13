@@ -2,16 +2,12 @@ package com.interzonedev.herokuspringdemo.service.user;
 
 import java.util.Date;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
 import com.interzonedev.sprintfix.dataset.DataSet;
 
 public class UserServiceCreateUserIntegrationTest extends AbstractUserServiceIntegrationTest {
-
-	private Log log = LogFactory.getLog(getClass());
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testCreateUserNullFirstName() {
