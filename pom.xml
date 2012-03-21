@@ -8,8 +8,11 @@
 	<version>1.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>HerokuSpringDemo Tests</name>
-	<url>http://maven.apache.org</url>
+	<name>Heroku Spring Demo Webapp Tests</name>
+	<description>
+		Integration tests for the Heroku Spring demo webapp.
+	</description>
+	<url>https://github.com/interzonedev/herokuSpringDemoTests</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
