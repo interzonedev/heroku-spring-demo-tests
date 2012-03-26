@@ -43,10 +43,23 @@
 		<dependency>
 			<groupId>com.interzonedev</groupId>
 			<artifactId>sprintfix</artifactId>
-			<version>0.2</version>
+			<version>0.2.1</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>interzonedev-maven-repo</id>
+			<url>http://repo.interzonedev.com/maven</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>
