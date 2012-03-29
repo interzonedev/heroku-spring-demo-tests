@@ -5,9 +5,9 @@
 	<configSuffixes>
 		<configSuffix><![CDATA[xml]]></configSuffix>
 	</configSuffixes>
-	<enableImports><![CDATA[false]]></enableImports>
+	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
-		<config>src/test/resources/spring/applicationContext-test.xml</config>
+		<config>src/test/resources/com/interzonedev/herokuspringdemo/spring/applicationContext-test.xml</config>
 	</configs>
 	<configSets>
 	</configSets>

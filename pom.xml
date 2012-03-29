@@ -5,7 +5,7 @@
 
 	<groupId>com.interzonedev</groupId>
 	<artifactId>heroku-spring-demo-tests</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Heroku Spring Demo Webapp Tests</name>
@@ -36,7 +36,7 @@
 		<dependency>
 			<groupId>com.interzonedev</groupId>
 			<artifactId>heroku-spring-demo</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
+			<version>1.0.2-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 
