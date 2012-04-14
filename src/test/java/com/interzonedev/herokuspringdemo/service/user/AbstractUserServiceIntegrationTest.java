@@ -3,18 +3,18 @@ package com.interzonedev.herokuspringdemo.service.user;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 
-import com.interzonedev.herokuspringdemo.HerokuAbstractIntegrationTest;
+import com.interzonedev.herokuspringdemo.HerokuSpringDemoAbstractIntegrationTest;
 import com.interzonedev.sprintfix.dataset.DataSet;
 
 @DataSet(filename = "dataset/users/emptyUsersDataSet.xml", dataSourceBeanId = "dataSource")
-public abstract class AbstractUserServiceIntegrationTest extends HerokuAbstractIntegrationTest {
+public abstract class AbstractUserServiceIntegrationTest extends HerokuSpringDemoAbstractIntegrationTest {
 
 	protected static List<String> USERS_IGNORE_COLUMN_NAMES = Arrays.asList(new String[] { "id", "time_created",
 			"time_updated" });
 
-	@Autowired
+	@Inject
 	protected UserService userService;
 
 }

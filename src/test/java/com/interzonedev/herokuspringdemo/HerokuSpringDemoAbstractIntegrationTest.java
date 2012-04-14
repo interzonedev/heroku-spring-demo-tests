@@ -1,24 +1,24 @@
 package com.interzonedev.herokuspringdemo;
 
+import javax.inject.Inject;
 import javax.sql.DataSource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.interzonedev.sprintfix.AbstractIntegrationTest;
 import com.interzonedev.sprintfix.dataset.dbunit.DbUnitDataSetTester;
 
 @ContextConfiguration(locations = { "classpath:com/interzonedev/herokuspringdemo/spring/applicationContext-test.xml" })
-public abstract class HerokuAbstractIntegrationTest extends AbstractIntegrationTest {
+public abstract class HerokuSpringDemoAbstractIntegrationTest extends AbstractIntegrationTest {
 
 	protected Log log = LogFactory.getLog(getClass());
 
-	@Autowired
+	@Inject
 	protected DataSource dataSource;
 
-	@Autowired
+	@Inject
 	protected DbUnitDataSetTester dbUnitDataSetTester;
 
 }
