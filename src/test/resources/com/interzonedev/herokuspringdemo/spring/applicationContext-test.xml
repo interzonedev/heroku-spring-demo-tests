@@ -6,7 +6,7 @@
 
 	<import resource="classpath:com/interzonedev/herokuspringdemo/spring/applicationContext.xml" />
 
-	<bean id="dbUrl" class="java.net.URI">
+	<bean id="dbUri" class="java.net.URI">
 		<constructor-arg
 			value="postgres://herokuspringdemouser:herokuspringdemopass@localhost/herokuspringdemo_test" />
 	</bean>
