@@ -43,20 +43,32 @@
 		<dependency>
 			<groupId>com.interzonedev</groupId>
 			<artifactId>sprintfix</artifactId>
-			<version>0.2.2</version>
+			<version>0.2.4</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
 	<repositories>
 		<repository>
-			<id>interzonedev-maven-repo</id>
-			<url>http://repo.interzonedev.com/maven</url>
+			<id>interzonedev-maven-repo-releases</id>
+			<url>http://repo.interzonedev.com/maven/releases</url>
+			<snapshots>
+				<enabled>false</enabled>
+				<checksumPolicy>fail</checksumPolicy>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+				<checksumPolicy>fail</checksumPolicy>
+			</releases>
+		</repository>
+		<repository>
+			<id>interzonedev-maven-repo-snapshots</id>
+			<url>http://repo.interzonedev.com/maven/snapshots</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
 			<releases>
-				<enabled>true</enabled>
+				<enabled>false</enabled>
 			</releases>
 		</repository>
 	</repositories>
