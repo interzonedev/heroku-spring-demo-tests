@@ -3,9 +3,14 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.interzonedev</groupId>
+	<parent>
+		<groupId>com.interzonedev</groupId>
+		<artifactId>interzonedev-parent</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
 	<artifactId>heroku-spring-demo-tests</artifactId>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>1.0.3-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Heroku Spring Demo Webapp Tests</name>
@@ -15,63 +20,25 @@
 	<url>https://github.com/interzonedev/herokuSpringDemoTests</url>
 	<inceptionYear>2012</inceptionYear>
 
-	<developers>
-		<developer>
-			<name>Mark Markarian</name>
-			<email>mark@interzonedev.com</email>
-			<url>http://interzonedev.com</url>
-			<roles>
-				<role>developer</role>
-			</roles>
-			<timezone>-8</timezone>
-		</developer>
-	</developers>
-
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>3.1.0.RELEASE</spring.version>
+		<spring.version>3.1.1.RELEASE</spring.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.interzonedev</groupId>
 			<artifactId>heroku-spring-demo</artifactId>
-			<version>1.0.2-SNAPSHOT</version>
+			<version>1.0.3-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.interzonedev</groupId>
 			<artifactId>sprintfix</artifactId>
-			<version>0.2.4</version>
+			<version>0.2.6</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<id>interzonedev-maven-repo-releases</id>
-			<url>http://repo.interzonedev.com/maven/releases</url>
-			<snapshots>
-				<enabled>false</enabled>
-				<checksumPolicy>fail</checksumPolicy>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-				<checksumPolicy>fail</checksumPolicy>
-			</releases>
-		</repository>
-		<repository>
-			<id>interzonedev-maven-repo-snapshots</id>
-			<url>http://repo.interzonedev.com/maven/snapshots</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</repository>
-	</repositories>
 
 	<build>
 		<plugins>
