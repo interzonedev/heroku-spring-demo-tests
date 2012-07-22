@@ -3,7 +3,7 @@ package com.interzonedev.herokuspringdemo.service.user;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.interzonedev.sprintfix.dataset.DataSet;
+import com.interzonedev.zankou.dataset.DataSet;
 
 public class UserServiceUpdateUserIntegrationTest extends AbstractUserServiceIntegrationTest {
 	@Test(expected = IllegalArgumentException.class)

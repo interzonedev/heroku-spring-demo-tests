@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>heroku-spring-demo-tests</artifactId>
-	<version>1.0.3-SNAPSHOT</version>
+	<version>1.0.4-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Heroku Spring Demo Webapp Tests</name>
@@ -34,8 +34,8 @@
 
 		<dependency>
 			<groupId>com.interzonedev</groupId>
-			<artifactId>sprintfix</artifactId>
-			<version>0.2.6</version>
+			<artifactId>zankou</artifactId>
+			<version>0.2.7</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

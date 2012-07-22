@@ -6,7 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.interzonedev.herokuspringdemo.HerokuSpringDemoAbstractIntegrationTest;
-import com.interzonedev.sprintfix.dataset.DataSet;
+import com.interzonedev.zankou.dataset.DataSet;
 
 @DataSet(filename = "dataset/users/emptyUsersDataSet.xml", dataSourceBeanId = "dataSource")
 public abstract class AbstractUserServiceIntegrationTest extends HerokuSpringDemoAbstractIntegrationTest {

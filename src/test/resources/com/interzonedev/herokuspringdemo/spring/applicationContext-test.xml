@@ -11,5 +11,5 @@
 			value="postgres://herokuspringdemouser:herokuspringdemopass@localhost/herokuspringdemo_test" />
 	</bean>
 
-	<bean id="dbUnitDataSetTester" class="com.interzonedev.sprintfix.dataset.dbunit.DbUnitDataSetTester" />
+	<bean id="dbUnitDataSetTester" class="com.interzonedev.zankou.dataset.dbunit.DbUnitDataSetTester" />
 </beans>

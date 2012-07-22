@@ -29,7 +29,7 @@
 		<level value="info" />
 	</logger>
 
-	<logger name="com.interzonedev.sprintfix">
+	<logger name="com.interzonedev.zankou">
 		<level value="debug" />
 	</logger>
 

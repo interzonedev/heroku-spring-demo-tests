@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.dao.EmptyResultDataAccessException;
 
-import com.interzonedev.sprintfix.dataset.DataSet;
+import com.interzonedev.zankou.dataset.DataSet;
 
 public class UserServiceDeleteUserIntegrationTest extends AbstractUserServiceIntegrationTest {
 

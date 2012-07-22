@@ -7,8 +7,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.test.context.ContextConfiguration;
 
-import com.interzonedev.sprintfix.AbstractIntegrationTest;
-import com.interzonedev.sprintfix.dataset.dbunit.DbUnitDataSetTester;
+import com.interzonedev.zankou.AbstractIntegrationTest;
+import com.interzonedev.zankou.dataset.dbunit.DbUnitDataSetTester;
 
 @ContextConfiguration(locations = { "classpath:com/interzonedev/herokuspringdemo/spring/applicationContext-test.xml" })
 public abstract class HerokuSpringDemoAbstractIntegrationTest extends AbstractIntegrationTest {

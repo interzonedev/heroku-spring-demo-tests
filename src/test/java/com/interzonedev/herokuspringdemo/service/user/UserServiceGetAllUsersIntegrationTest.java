@@ -5,7 +5,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.interzonedev.sprintfix.dataset.DataSet;
+import com.interzonedev.zankou.dataset.DataSet;
 
 public class UserServiceGetAllUsersIntegrationTest extends AbstractUserServiceIntegrationTest {
 	@Test
