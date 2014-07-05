@@ -6,115 +6,115 @@ import org.junit.Test;
 import com.interzonedev.zankou.dataset.DataSet;
 
 public class UserServiceUpdateUserIntegrationTest extends AbstractUserServiceIntegrationTest {
-	@Test(expected = IllegalArgumentException.class)
-	public void testUpdateUserNullUser() {
-		log.debug("testUpdateUserNullUser");
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateUserNullUser() {
+        log.debug("testUpdateUserNullUser");
 
-		userService.updateUser(null);
-	}
+        userService.updateUser(null);
+    }
 
-	@Test(expected = InvalidUserException.class)
-	public void testUpdateUserNullId() {
-		log.debug("testUpdateUserNullId");
+    @Test(expected = InvalidUserException.class)
+    public void testUpdateUserNullId() {
+        log.debug("testUpdateUserNullId");
 
-		User user = new User();
+        User user = new User();
 
-		userService.updateUser(user);
-	}
+        userService.updateUser(user);
+    }
 
-	@Test(expected = InvalidUserException.class)
-	public void testUpdateUserNonPositiveId() {
-		log.debug("testUpdateUserNonPositiveId");
+    @Test(expected = InvalidUserException.class)
+    public void testUpdateUserNonPositiveId() {
+        log.debug("testUpdateUserNonPositiveId");
 
-		User user = new User();
-		user.setId(0L);
+        User user = new User();
+        user.setId(0L);
 
-		userService.updateUser(user);
-	}
+        userService.updateUser(user);
+    }
 
-	@Test
-	@DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
-	public void testUpdateUserNonExistentId() {
-		log.debug("testUpdateUserNonExistentId");
+    @Test
+    @DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
+    public void testUpdateUserNonExistentId() {
+        log.debug("testUpdateUserNonExistentId");
 
-		User user = new User();
-		user.setId(100L);
+        User user = new User();
+        user.setId(100L);
 
-		boolean invalidUserExceptionThrown = false;
+        boolean invalidUserExceptionThrown = false;
 
-		try {
-			userService.updateUser(user);
-		} catch (InvalidUserException e) {
-			invalidUserExceptionThrown = true;
-		}
+        try {
+            userService.updateUser(user);
+        } catch (InvalidUserException e) {
+            invalidUserExceptionThrown = true;
+        }
 
-		Assert.assertTrue(invalidUserExceptionThrown);
+        Assert.assertTrue(invalidUserExceptionThrown);
 
-		dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/usersDataSet.xml", "users",
-				USERS_IGNORE_COLUMN_NAMES);
-	}
+        dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/usersDataSet.xml", "users",
+                USERS_IGNORE_COLUMN_NAMES);
+    }
 
-	@Test
-	@DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
-	public void testUpdateUserNullFirstName() {
-		log.debug("testUpdateUserNullFirstName");
+    @Test
+    @DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
+    public void testUpdateUserNullFirstName() {
+        log.debug("testUpdateUserNullFirstName");
 
-		User user = userService.getUserById(1L);
-		user.setFirstName(null);
-		user.setLastName("Fester");
-		user.setAdmin(false);
+        User user = userService.getUserById(1L);
+        user.setFirstName(null);
+        user.setLastName("Fester");
+        user.setAdmin(false);
 
-		boolean invalidUserExceptionThrown = false;
+        boolean invalidUserExceptionThrown = false;
 
-		try {
-			userService.updateUser(user);
-		} catch (InvalidUserException e) {
-			invalidUserExceptionThrown = true;
-		}
+        try {
+            userService.updateUser(user);
+        } catch (InvalidUserException e) {
+            invalidUserExceptionThrown = true;
+        }
 
-		Assert.assertTrue(invalidUserExceptionThrown);
+        Assert.assertTrue(invalidUserExceptionThrown);
 
-		dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/usersDataSet.xml", "users",
-				USERS_IGNORE_COLUMN_NAMES);
-	}
+        dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/usersDataSet.xml", "users",
+                USERS_IGNORE_COLUMN_NAMES);
+    }
 
-	@Test
-	@DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
-	public void testUpdateUserNullLastName() {
-		log.debug("testUpdateUserNullLastName");
+    @Test
+    @DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
+    public void testUpdateUserNullLastName() {
+        log.debug("testUpdateUserNullLastName");
 
-		User user = userService.getUserById(1L);
-		user.setFirstName("Uncle");
-		user.setLastName(null);
-		user.setAdmin(false);
+        User user = userService.getUserById(1L);
+        user.setFirstName("Uncle");
+        user.setLastName(null);
+        user.setAdmin(false);
 
-		boolean invalidUserExceptionThrown = false;
+        boolean invalidUserExceptionThrown = false;
 
-		try {
-			userService.updateUser(user);
-		} catch (InvalidUserException e) {
-			invalidUserExceptionThrown = true;
-		}
+        try {
+            userService.updateUser(user);
+        } catch (InvalidUserException e) {
+            invalidUserExceptionThrown = true;
+        }
 
-		Assert.assertTrue(invalidUserExceptionThrown);
+        Assert.assertTrue(invalidUserExceptionThrown);
 
-		dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/usersDataSet.xml", "users",
-				USERS_IGNORE_COLUMN_NAMES);
-	}
+        dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/usersDataSet.xml", "users",
+                USERS_IGNORE_COLUMN_NAMES);
+    }
 
-	@Test
-	@DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
-	public void testUpdateUserValid() {
-		log.debug("testUpdateUserValid");
+    @Test
+    @DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
+    public void testUpdateUserValid() {
+        log.debug("testUpdateUserValid");
 
-		User user = userService.getUserById(1L);
-		user.setFirstName("Uncle");
-		user.setLastName("Fester");
-		user.setAdmin(false);
+        User user = userService.getUserById(1L);
+        user.setFirstName("Uncle");
+        user.setLastName("Fester");
+        user.setAdmin(false);
 
-		userService.updateUser(user);
+        userService.updateUser(user);
 
-		dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/updatedUserDataSet.xml", "users",
-				USERS_IGNORE_COLUMN_NAMES);
-	}
+        dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/updatedUserDataSet.xml", "users",
+                USERS_IGNORE_COLUMN_NAMES);
+    }
 }

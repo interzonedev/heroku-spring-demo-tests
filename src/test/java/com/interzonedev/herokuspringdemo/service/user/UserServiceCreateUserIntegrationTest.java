@@ -9,70 +9,70 @@ import com.interzonedev.zankou.dataset.DataSet;
 
 public class UserServiceCreateUserIntegrationTest extends AbstractUserServiceIntegrationTest {
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testCreateUserNullFirstName() {
-		log.debug("testCreateUserNullFirstName");
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateUserNullFirstName() {
+        log.debug("testCreateUserNullFirstName");
 
-		userService.createUser(null, "test", true);
-	}
+        userService.createUser(null, "test", true);
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testCreateUserEmptyFirstName() {
-		log.debug("testCreateUserEmptyFirstName");
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateUserEmptyFirstName() {
+        log.debug("testCreateUserEmptyFirstName");
 
-		userService.createUser("", "test", true);
-	}
+        userService.createUser("", "test", true);
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testCreateUserBlankFirstName() {
-		log.debug("testCreateUserBlankFirstName");
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateUserBlankFirstName() {
+        log.debug("testCreateUserBlankFirstName");
 
-		userService.createUser("  ", "test", true);
-	}
+        userService.createUser("  ", "test", true);
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testCreateUserNullLastName() {
-		log.debug("testCreateUserNullLastName");
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateUserNullLastName() {
+        log.debug("testCreateUserNullLastName");
 
-		userService.createUser("test", null, true);
-	}
+        userService.createUser("test", null, true);
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testCreateUserEmptyLastName() {
-		log.debug("testCreateUserEmptyLastName");
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateUserEmptyLastName() {
+        log.debug("testCreateUserEmptyLastName");
 
-		userService.createUser("test", "", true);
-	}
+        userService.createUser("test", "", true);
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testCreateUserBlankLastName() {
-		log.debug("testCreateUserBlankLastName");
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateUserBlankLastName() {
+        log.debug("testCreateUserBlankLastName");
 
-		userService.createUser("test", "  ", true);
-	}
+        userService.createUser("test", "  ", true);
+    }
 
-	@Test
-	@DataSet(filename = "dataset/users/emptyUsersDataSet.xml", dataSourceBeanId = "dataSource")
-	public void testCreateUserValid() {
-		log.debug("testCreateUserValid");
+    @Test
+    @DataSet(filename = "dataset/users/emptyUsersDataSet.xml", dataSourceBeanId = "dataSource")
+    public void testCreateUserValid() {
+        log.debug("testCreateUserValid");
 
-		String firstName = "Gern";
-		String lastName = "Blanston";
+        String firstName = "Gern";
+        String lastName = "Blanston";
 
-		Date now = new Date();
+        Date now = new Date();
 
-		User user = userService.createUser(firstName, lastName, true);
+        User user = userService.createUser(firstName, lastName, true);
 
-		Assert.assertNotNull(user);
-		Assert.assertTrue(user.getId() > 0);
-		Assert.assertEquals(1, user.getTimeCreated().compareTo(now));
-		Assert.assertEquals(1, user.getTimeUpdated().compareTo(now));
-		Assert.assertEquals(firstName, user.getFirstName());
-		Assert.assertEquals(lastName, user.getLastName());
-		Assert.assertTrue(user.isAdmin());
+        Assert.assertNotNull(user);
+        Assert.assertTrue(user.getId() > 0);
+        Assert.assertEquals(1, user.getTimeCreated().compareTo(now));
+        Assert.assertEquals(1, user.getTimeUpdated().compareTo(now));
+        Assert.assertEquals(firstName, user.getFirstName());
+        Assert.assertEquals(lastName, user.getLastName());
+        Assert.assertTrue(user.isAdmin());
 
-		dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/usersDataSet.xml", "users",
-				USERS_IGNORE_COLUMN_NAMES);
-	}
+        dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/usersDataSet.xml", "users",
+                USERS_IGNORE_COLUMN_NAMES);
+    }
 
 }

@@ -8,65 +8,65 @@ import com.interzonedev.zankou.dataset.DataSet;
 
 public class UserServiceDeleteUserIntegrationTest extends AbstractUserServiceIntegrationTest {
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testDeleteUserNullUser() {
-		log.debug("testDeleteUserNullUser");
+    @Test(expected = IllegalArgumentException.class)
+    public void testDeleteUserNullUser() {
+        log.debug("testDeleteUserNullUser");
 
-		userService.deleteUser(null);
-	}
+        userService.deleteUser(null);
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testDeleteUserUserWithNullId() {
-		log.debug("testDeleteUserUserWithNullId");
+    @Test(expected = IllegalArgumentException.class)
+    public void testDeleteUserUserWithNullId() {
+        log.debug("testDeleteUserUserWithNullId");
 
-		User user = new User();
+        User user = new User();
 
-		userService.deleteUser(user);
-	}
+        userService.deleteUser(user);
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testDeleteUserUserWithNonPositiveId() {
-		log.debug("testDeleteUserUserWithNonPositiveId");
+    @Test(expected = IllegalArgumentException.class)
+    public void testDeleteUserUserWithNonPositiveId() {
+        log.debug("testDeleteUserUserWithNonPositiveId");
 
-		User user = new User();
-		user.setId(0L);
+        User user = new User();
+        user.setId(0L);
 
-		userService.deleteUser(user);
-	}
+        userService.deleteUser(user);
+    }
 
-	@Test
-	@DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
-	public void testDeleteUserUserWithNonExistentId() {
-		log.debug("testDeleteUserUserWithNonExistentId");
+    @Test
+    @DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
+    public void testDeleteUserUserWithNonExistentId() {
+        log.debug("testDeleteUserUserWithNonExistentId");
 
-		User user = new User();
-		user.setId(100L);
+        User user = new User();
+        user.setId(100L);
 
-		boolean emptyResultDataAccessExceptionThrown = false;
+        boolean emptyResultDataAccessExceptionThrown = false;
 
-		try {
-			userService.deleteUser(user);
-		} catch (EmptyResultDataAccessException e) {
-			emptyResultDataAccessExceptionThrown = true;
-		}
+        try {
+            userService.deleteUser(user);
+        } catch (EmptyResultDataAccessException e) {
+            emptyResultDataAccessExceptionThrown = true;
+        }
 
-		Assert.assertTrue(emptyResultDataAccessExceptionThrown);
+        Assert.assertTrue(emptyResultDataAccessExceptionThrown);
 
-		dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/usersDataSet.xml", "users",
-				USERS_IGNORE_COLUMN_NAMES);
-	}
+        dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/usersDataSet.xml", "users",
+                USERS_IGNORE_COLUMN_NAMES);
+    }
 
-	@Test
-	@DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
-	public void testDeleteUserValid() {
-		log.debug("testDeleteUserValid");
+    @Test
+    @DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
+    public void testDeleteUserValid() {
+        log.debug("testDeleteUserValid");
 
-		User user = userService.getUserById(1L);
+        User user = userService.getUserById(1L);
 
-		userService.deleteUser(user);
+        userService.deleteUser(user);
 
-		dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/emptyUsersDataSet.xml", "users",
-				USERS_IGNORE_COLUMN_NAMES);
-	}
+        dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/emptyUsersDataSet.xml", "users",
+                USERS_IGNORE_COLUMN_NAMES);
+    }
 
 }

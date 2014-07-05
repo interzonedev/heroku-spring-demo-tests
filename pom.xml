@@ -1,75 +1,75 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>com.interzonedev</groupId>
-		<artifactId>interzonedev-parent</artifactId>
-		<version>2.2.0</version>
-	</parent>
+    <parent>
+        <groupId>com.interzonedev</groupId>
+        <artifactId>interzonedev-parent</artifactId>
+        <version>2.2.0</version>
+    </parent>
 
-	<artifactId>heroku-spring-demo-tests</artifactId>
-	<version>2.2.0-SNAPSHOT</version>
-	<packaging>jar</packaging>
+    <artifactId>heroku-spring-demo-tests</artifactId>
+    <version>2.2.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
-	<name>Heroku Spring Demo Webapp Tests</name>
-	<description>
+    <name>Heroku Spring Demo Webapp Tests</name>
+    <description>
 		Integration tests for the Heroku Spring demo webapp.
 	</description>
-	<url>https://github.com/interzonedev/herokuSpringDemoTests</url>
-	<inceptionYear>2012</inceptionYear>
+    <url>https://github.com/interzonedev/herokuSpringDemoTests</url>
+    <inceptionYear>2012</inceptionYear>
 
-	<properties>
-		<spring.version>4.0.5.RELEASE</spring.version>
-	</properties>
+    <properties>
+        <spring.version>4.0.5.RELEASE</spring.version>
+    </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>com.interzonedev</groupId>
-			<artifactId>heroku-spring-demo</artifactId>
-			<version>2.2.0-SNAPSHOT</version>
-			<scope>test</scope>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>com.interzonedev</groupId>
+            <artifactId>heroku-spring-demo</artifactId>
+            <version>2.2.0-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>com.interzonedev</groupId>
-			<artifactId>zankou</artifactId>
-			<version>1.2.0</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>com.interzonedev</groupId>
+            <artifactId>zankou</artifactId>
+            <version>1.2.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.17</version>
-				<configuration>
-					<excludes>
-						<exclude>**/*IntegrationTest.java</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.17</version>
-				<configuration>
-					<includes>
-						<include>**/*IntegrationTest.java</include>
-					</includes>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>integration-test</goal>
-							<goal>verify</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*IntegrationTest.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <includes>
+                        <include>**/*IntegrationTest.java</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
