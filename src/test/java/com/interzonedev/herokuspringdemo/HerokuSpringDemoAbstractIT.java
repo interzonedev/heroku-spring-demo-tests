@@ -12,7 +12,7 @@ import com.interzonedev.zankou.AbstractIntegrationTest;
 import com.interzonedev.zankou.dataset.dbunit.DbUnitDataSetTester;
 
 @ContextConfiguration(locations = { "classpath:com/interzonedev/herokuspringdemo/spring/applicationContext-test.xml" })
-public abstract class HerokuSpringDemoAbstractIntegrationTest extends AbstractIntegrationTest {
+public abstract class HerokuSpringDemoAbstractIT extends AbstractIntegrationTest {
 
     protected final Logger log = (Logger) LoggerFactory.getLogger(getClass());
 

@@ -5,8 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ UserServiceCreateUserIntegrationTest.class, UserServiceDeleteUserIntegrationTest.class,
-        UserServiceGetAllUsersIntegrationTest.class, UserServiceGetByIdIntegrationTest.class,
-        UserServiceUpdateUserIntegrationTest.class })
+@SuiteClasses({ UserServiceCreateUserIT.class, UserServiceDeleteUserIT.class, UserServiceGetAllUsersIT.class,
+        UserServiceGetByIdIT.class, UserServiceUpdateUserIT.class })
 public class UserServiceTestSuite {
 }

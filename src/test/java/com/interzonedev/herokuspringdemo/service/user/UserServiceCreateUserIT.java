@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import com.interzonedev.zankou.dataset.DataSet;
 
-public class UserServiceCreateUserIntegrationTest extends AbstractUserServiceIntegrationTest {
+public class UserServiceCreateUserIT extends AbstractUserServiceIT {
 
     @Test(expected = IllegalArgumentException.class)
     public void testCreateUserNullFirstName() {

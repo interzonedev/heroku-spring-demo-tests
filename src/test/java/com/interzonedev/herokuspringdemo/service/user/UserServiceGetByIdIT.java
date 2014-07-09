@@ -9,7 +9,7 @@ import org.junit.Test;
 import com.interzonedev.herokuspringdemo.TestUtils;
 import com.interzonedev.zankou.dataset.DataSet;
 
-public class UserServiceGetByIdIntegrationTest extends AbstractUserServiceIntegrationTest {
+public class UserServiceGetByIdIT extends AbstractUserServiceIT {
     @Test(expected = IllegalArgumentException.class)
     public void testGetUserByIdNullId() {
         log.debug("testGetUserByIdNullId");

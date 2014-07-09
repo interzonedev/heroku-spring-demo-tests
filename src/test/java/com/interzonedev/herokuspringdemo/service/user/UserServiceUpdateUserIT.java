@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import com.interzonedev.zankou.dataset.DataSet;
 
-public class UserServiceUpdateUserIntegrationTest extends AbstractUserServiceIntegrationTest {
+public class UserServiceUpdateUserIT extends AbstractUserServiceIT {
     @Test(expected = IllegalArgumentException.class)
     public void testUpdateUserNullUser() {
         log.debug("testUpdateUserNullUser");

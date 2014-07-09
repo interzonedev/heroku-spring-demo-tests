@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import com.interzonedev.zankou.dataset.DataSet;
 
-public class UserServiceGetAllUsersIntegrationTest extends AbstractUserServiceIntegrationTest {
+public class UserServiceGetAllUsersIT extends AbstractUserServiceIT {
     @Test
     @DataSet(filename = "dataset/users/emptyUsersDataSet.xml", dataSourceBeanId = "dataSource")
     public void testGetAllUsersNoUsers() {

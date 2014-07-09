@@ -6,7 +6,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 import com.interzonedev.zankou.dataset.DataSet;
 
-public class UserServiceDeleteUserIntegrationTest extends AbstractUserServiceIntegrationTest {
+public class UserServiceDeleteUserIT extends AbstractUserServiceIT {
 
     @Test(expected = IllegalArgumentException.class)
     public void testDeleteUserNullUser() {
