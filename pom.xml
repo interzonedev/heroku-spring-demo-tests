@@ -10,25 +10,25 @@
     </parent>
 
     <artifactId>heroku-spring-demo-tests</artifactId>
-    <version>2.2.1-SNAPSHOT</version>
+    <version>${heroku.spring.demo.version}</version>
     <packaging>jar</packaging>
 
     <name>Heroku Spring Demo Webapp Tests</name>
     <description>
-		Integration tests for the Heroku Spring demo webapp.
-	</description>
+        Integration tests for the Heroku Spring demo webapp.
+    </description>
     <url>https://github.com/interzonedev/herokuSpringDemoTests</url>
     <inceptionYear>2012</inceptionYear>
 
     <properties>
-        <spring.version>5.1.0.RELEASE</spring.version>
+        <heroku.spring.demo.version>2.3.0-SNAPSHOT</heroku.spring.demo.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.interzonedev</groupId>
             <artifactId>heroku-spring-demo</artifactId>
-            <version>2.2.0-SNAPSHOT</version>
+            <version>${heroku.spring.demo.version}</version>
             <scope>test</scope>
         </dependency>
 
