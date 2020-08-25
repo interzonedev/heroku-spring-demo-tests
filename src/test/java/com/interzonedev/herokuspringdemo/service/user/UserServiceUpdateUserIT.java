@@ -1,42 +1,37 @@
 package com.interzonedev.herokuspringdemo.service.user;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import com.interzonedev.zankou.dataset.DataSet;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserServiceUpdateUserIT extends AbstractUserServiceIT {
-    @Test(expected = IllegalArgumentException.class)
-    public void testUpdateUserNullUser() {
-        log.debug("testUpdateUserNullUser");
 
-        userService.updateUser(null);
+    @Test
+    public void testUpdateUserNullUser() {
+        assertThrows(IllegalArgumentException.class, () -> userService.updateUser(null));
     }
 
-    @Test(expected = InvalidUserException.class)
+    @Test
     public void testUpdateUserNullId() {
-        log.debug("testUpdateUserNullId");
-
         User user = new User();
 
-        userService.updateUser(user);
+        assertThrows(InvalidUserException.class, () -> userService.updateUser(user));
+
     }
 
-    @Test(expected = InvalidUserException.class)
+    @Test
     public void testUpdateUserNonPositiveId() {
-        log.debug("testUpdateUserNonPositiveId");
-
         User user = new User();
         user.setId(0L);
 
-        userService.updateUser(user);
+        assertThrows(InvalidUserException.class, () -> userService.updateUser(user));
     }
 
     @Test
     @DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
     public void testUpdateUserNonExistentId() {
-        log.debug("testUpdateUserNonExistentId");
-
         User user = new User();
         user.setId(100L);
 
@@ -48,7 +43,7 @@ public class UserServiceUpdateUserIT extends AbstractUserServiceIT {
             invalidUserExceptionThrown = true;
         }
 
-        Assert.assertTrue(invalidUserExceptionThrown);
+        assertTrue(invalidUserExceptionThrown);
 
         dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/usersDataSet.xml", "users",
                 USERS_IGNORE_COLUMN_NAMES);
@@ -57,8 +52,6 @@ public class UserServiceUpdateUserIT extends AbstractUserServiceIT {
     @Test
     @DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
     public void testUpdateUserNullFirstName() {
-        log.debug("testUpdateUserNullFirstName");
-
         User user = userService.getUserById(1L);
         user.setFirstName(null);
         user.setLastName("Fester");
@@ -72,7 +65,7 @@ public class UserServiceUpdateUserIT extends AbstractUserServiceIT {
             invalidUserExceptionThrown = true;
         }
 
-        Assert.assertTrue(invalidUserExceptionThrown);
+        assertTrue(invalidUserExceptionThrown);
 
         dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/usersDataSet.xml", "users",
                 USERS_IGNORE_COLUMN_NAMES);
@@ -81,8 +74,6 @@ public class UserServiceUpdateUserIT extends AbstractUserServiceIT {
     @Test
     @DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
     public void testUpdateUserNullLastName() {
-        log.debug("testUpdateUserNullLastName");
-
         User user = userService.getUserById(1L);
         user.setFirstName("Uncle");
         user.setLastName(null);
@@ -96,7 +87,7 @@ public class UserServiceUpdateUserIT extends AbstractUserServiceIT {
             invalidUserExceptionThrown = true;
         }
 
-        Assert.assertTrue(invalidUserExceptionThrown);
+        assertTrue(invalidUserExceptionThrown);
 
         dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/usersDataSet.xml", "users",
                 USERS_IGNORE_COLUMN_NAMES);
@@ -105,8 +96,6 @@ public class UserServiceUpdateUserIT extends AbstractUserServiceIT {
     @Test
     @DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
     public void testUpdateUserValid() {
-        log.debug("testUpdateUserValid");
-
         User user = userService.getUserById(1L);
         user.setFirstName("Uncle");
         user.setLastName("Fester");
@@ -117,4 +106,5 @@ public class UserServiceUpdateUserIT extends AbstractUserServiceIT {
         dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/updatedUserDataSet.xml", "users",
                 USERS_IGNORE_COLUMN_NAMES);
     }
+
 }

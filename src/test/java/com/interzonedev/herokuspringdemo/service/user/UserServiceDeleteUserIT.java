@@ -1,44 +1,37 @@
 package com.interzonedev.herokuspringdemo.service.user;
 
-import org.junit.Assert;
-import org.junit.Test;
+import com.interzonedev.zankou.dataset.DataSet;
+import org.junit.jupiter.api.Test;
 import org.springframework.dao.EmptyResultDataAccessException;
 
-import com.interzonedev.zankou.dataset.DataSet;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserServiceDeleteUserIT extends AbstractUserServiceIT {
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testDeleteUserNullUser() {
-        log.debug("testDeleteUserNullUser");
-
-        userService.deleteUser(null);
+        assertThrows(IllegalArgumentException.class, () -> userService.deleteUser(null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testDeleteUserUserWithNullId() {
-        log.debug("testDeleteUserUserWithNullId");
-
         User user = new User();
 
-        userService.deleteUser(user);
+        assertThrows(IllegalArgumentException.class, () -> userService.deleteUser(user));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testDeleteUserUserWithNonPositiveId() {
-        log.debug("testDeleteUserUserWithNonPositiveId");
-
         User user = new User();
         user.setId(0L);
 
-        userService.deleteUser(user);
+        assertThrows(IllegalArgumentException.class, () -> userService.deleteUser(user));
     }
 
     @Test
     @DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
     public void testDeleteUserUserWithNonExistentId() {
-        log.debug("testDeleteUserUserWithNonExistentId");
-
         User user = new User();
         user.setId(100L);
 
@@ -50,7 +43,7 @@ public class UserServiceDeleteUserIT extends AbstractUserServiceIT {
             emptyResultDataAccessExceptionThrown = true;
         }
 
-        Assert.assertTrue(emptyResultDataAccessExceptionThrown);
+        assertTrue(emptyResultDataAccessExceptionThrown);
 
         dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/usersDataSet.xml", "users",
                 USERS_IGNORE_COLUMN_NAMES);
@@ -59,8 +52,6 @@ public class UserServiceDeleteUserIT extends AbstractUserServiceIT {
     @Test
     @DataSet(filename = "dataset/users/usersDataSet.xml", dataSourceBeanId = "dataSource")
     public void testDeleteUserValid() {
-        log.debug("testDeleteUserValid");
-
         User user = userService.getUserById(1L);
 
         userService.deleteUser(user);

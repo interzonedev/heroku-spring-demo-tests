@@ -1,61 +1,50 @@
 package com.interzonedev.herokuspringdemo.service.user;
 
+import com.interzonedev.zankou.dataset.DataSet;
+import org.junit.jupiter.api.Test;
+
 import java.util.Date;
 
-import org.junit.Assert;
-import org.junit.Test;
-
-import com.interzonedev.zankou.dataset.DataSet;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserServiceCreateUserIT extends AbstractUserServiceIT {
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testCreateUserNullFirstName() {
-        log.debug("testCreateUserNullFirstName");
-
-        userService.createUser(null, "test", true);
+        assertThrows(IllegalArgumentException.class, () -> userService.createUser(null, "test", true));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testCreateUserEmptyFirstName() {
-        log.debug("testCreateUserEmptyFirstName");
-
-        userService.createUser("", "test", true);
+        assertThrows(IllegalArgumentException.class, () -> userService.createUser("", "test", true));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testCreateUserBlankFirstName() {
-        log.debug("testCreateUserBlankFirstName");
-
-        userService.createUser("  ", "test", true);
+        assertThrows(IllegalArgumentException.class, () -> userService.createUser("  ", "test", true));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testCreateUserNullLastName() {
-        log.debug("testCreateUserNullLastName");
-
-        userService.createUser("test", null, true);
+        assertThrows(IllegalArgumentException.class, () -> userService.createUser("test", null, true));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testCreateUserEmptyLastName() {
-        log.debug("testCreateUserEmptyLastName");
-
-        userService.createUser("test", "", true);
+        assertThrows(IllegalArgumentException.class, () -> userService.createUser("test", "", true));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testCreateUserBlankLastName() {
-        log.debug("testCreateUserBlankLastName");
-
-        userService.createUser("test", "  ", true);
+        assertThrows(IllegalArgumentException.class, () -> userService.createUser("test", "  ", true));
     }
 
     @Test
     @DataSet(filename = "dataset/users/emptyUsersDataSet.xml", dataSourceBeanId = "dataSource")
     public void testCreateUserValid() {
-        log.debug("testCreateUserValid");
-
         String firstName = "Gern";
         String lastName = "Blanston";
 
@@ -63,13 +52,13 @@ public class UserServiceCreateUserIT extends AbstractUserServiceIT {
 
         User user = userService.createUser(firstName, lastName, true);
 
-        Assert.assertNotNull(user);
-        Assert.assertTrue(user.getId() > 0);
-        Assert.assertEquals(1, user.getTimeCreated().compareTo(now));
-        Assert.assertEquals(1, user.getTimeUpdated().compareTo(now));
-        Assert.assertEquals(firstName, user.getFirstName());
-        Assert.assertEquals(lastName, user.getLastName());
-        Assert.assertTrue(user.isAdmin());
+        assertNotNull(user);
+        assertTrue(user.getId() > 0);
+        assertEquals(1, user.getTimeCreated().compareTo(now));
+        assertEquals(1, user.getTimeUpdated().compareTo(now));
+        assertEquals(firstName, user.getFirstName());
+        assertEquals(lastName, user.getLastName());
+        assertTrue(user.isAdmin());
 
         dbUnitDataSetTester.compareDataSetsIgnoreColumns(dataSource, "dataset/users/usersDataSet.xml", "users",
                 USERS_IGNORE_COLUMN_NAMES);
