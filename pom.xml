@@ -21,7 +21,7 @@
     <inceptionYear>2012</inceptionYear>
 
     <properties>
-        <heroku.spring.demo.version>2.6.0-SNAPSHOT</heroku.spring.demo.version>
+        <heroku.spring.demo.version>3.0.0-SNAPSHOT</heroku.spring.demo.version>
     </properties>
 
     <dependencies>
